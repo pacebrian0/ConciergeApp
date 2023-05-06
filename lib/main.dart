@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => Dashboard(),
         '/property': (context) => PropertyDetail(),
         '/room': (context) => RoomDetail(),
-        '/reservation': (context) => ReservationDetail(),
+        '/reservationDetail': (context) => ReservationDetail(),
         '/reservationForm': (context) => ReservationForm(onSave: (Reservation ) {  },),
       },
       debugShowCheckedModeBanner: false,

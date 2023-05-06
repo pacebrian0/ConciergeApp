@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:conciergeapp/Models/User.dart';
 import 'package:conciergeapp/Services/HttpService.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'Models/Reservation.dart';
 
@@ -16,13 +17,15 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   List<Reservation> reservations = [];
   late User user;
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+  Map args = {};
 
   Future<List<Reservation>> getReservations(int id) async {
-    String url = 'reservation/user/name/$id';
+    String url = 'reservation/user/$id';
     var response = await HttpService().get(url);
-    if(response.content.length > 0) {
+    if (response.content.length > 0) {
       return List<Reservation>.from(
-        jsonDecode(response.content).map((i) => Reservation.fromJson(i)));
+          jsonDecode(response.content).map((i) => Reservation.fromJson(i)));
     } else {
       return [];
     }
@@ -31,24 +34,23 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    user = User(id: 0,name: "",surname: "",email: "");
+    user = User(id: 0, name: "", surname: "", email: "");
 
-    Future.delayed(Duration.zero, ()
-    async {
+    Future.delayed(Duration.zero, () async {
       // TODO: implement initState
-      final args =
-      ModalRoute
-          .of(context)!
-          .settings
-          .arguments as Map<String, dynamic>;
+      args = args.isNotEmpty? args:
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
       user = args['user'];
-      reservations = await getReservations(user.id);
+      var res = await getReservations(user.id);
+      setState(() {
+        reservations = res;
+      });
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
+    print(reservations);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dashboard'),
@@ -94,8 +96,15 @@ class _DashboardState extends State<Dashboard> {
                             title: Text(
                                 reservations[index].reservationDate.toString()),
                             subtitle: Text(
-                                'Reservation: #${reservations[index].id}\nRoom: ${reservations[index].roomID}\nCreated on: ${reservations[index].createdOn}'),
+                                'Reservation: #${reservations[index].id}\nRoom: ${reservations[index].roomID}\nReservation Date: ${dateFormat.format(reservations[index].reservationDate)}'),
                             trailing: const Icon(Icons.qr_code),
+                            onTap: () {
+                              if (context.mounted) {
+                                Navigator.pushReplacementNamed(
+                                    context, '/reservationDetail',
+                                    arguments: {'user': user, 'reservation': reservations[index]});
+                              }
+                            },
                           ),
                         ),
                       );
@@ -105,7 +114,8 @@ class _DashboardState extends State<Dashboard> {
               : ElevatedButton(
                   onPressed: () {
                     if (context.mounted) {
-                      Navigator.pushReplacementNamed(context, '/reservationForm',
+                      Navigator.pushReplacementNamed(
+                          context, '/reservationForm',
                           arguments: {'user': user});
                     }
                   },
@@ -114,8 +124,10 @@ class _DashboardState extends State<Dashboard> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Perform action when FAB is pressed
-          print('FAB pressed');
+          if (context.mounted) {
+            Navigator.pushReplacementNamed(context, '/reservationForm',
+                arguments: {'user': user});
+          }
         },
         child: const Icon(Icons.add),
       ),

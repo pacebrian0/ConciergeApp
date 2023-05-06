@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Reservation {
   int id;
   int roomID;
@@ -31,19 +33,19 @@ class Reservation {
 
   factory Reservation.fromJson(Map<String, dynamic> json) {
     return Reservation(
-      id: json['id'],
-      roomID: json['roomID'],
-      userID: json['userID'],
-      expiresYN: json['expiresYN'],
-      expiryDate: json['expiryDate'],
-      reservationCode: json['reservationCode'],
-      createdOn: json['createdOn'],
-      createdBy: json['createdBy'],
-      modifiedOn: json['modifiedOn'],
-      modifiedBy: json['modifiedBy'],
-      status: json['status'],
-      isActive: json['isActive'],
-      reservationDate: json['reservationDate'],
+      id: json['id'] as int,
+      roomID: json['roomID'] as int,
+      userID: json['userID'] as int,
+      expiresYN: json['expiresYN'] as bool,
+      expiryDate: DateFormat("yyyy-MM-ddTHH:mm:ss").parse(json['expiryDate'], true).toLocal(),
+      reservationCode: json['reservationCode'] as String,
+      createdOn: DateFormat("yyyy-MM-ddTHH:mm:ss").parse(json['createdOn'], true).toLocal(),
+      createdBy: json['createdBy'] as int,
+      modifiedOn: DateFormat("yyyy-MM-ddTHH:mm:ss").parse(json['modifiedOn'], true).toLocal(),
+      modifiedBy: json['modifiedBy'] as int,
+      status: json['status'] as String,
+      isActive: json['isActive'] as bool,
+      reservationDate: DateFormat("yyyy-MM-ddTHH:mm:ss").parse(json['reservationDate'], true).toLocal(),
     );
   }
 }

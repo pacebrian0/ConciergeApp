@@ -34,6 +34,8 @@ class _ReservationFormState extends State<ReservationForm> {
 
   late List<Property> _properties = [];
   late List<Room> _rooms = [];
+  int selectedProperty = -1;
+  int selectedRoom = -1;
 
   Future<DateTime?> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -91,17 +93,17 @@ class _ReservationFormState extends State<ReservationForm> {
 
   Future<List<Property>> getProperties() async {
     var res = await HttpService().get("property/");
-    if (res.content.length == 0) {
-      return [];
+    if (res.content.length == 0 || res.content == "[]") {
+      return <Property>[];
     }
     return List<Property>.from(
         jsonDecode(res.content).map((i) => Property.fromJson(i)));
   }
 
   Future<List<Room>> getRooms(int property) async {
-    var res = await HttpService().get("room/property/property");
-    if (res.content.length == 0) {
-      return [];
+    var res = await HttpService().get("room/property/$property");
+    if (res.content.length == 0 || res.content == "[]") {
+      return <Room>[];
     } else {
       return List<Room>.from(
           jsonDecode(res.content).map((i) => Room.fromJson(i)));
@@ -111,9 +113,8 @@ class _ReservationFormState extends State<ReservationForm> {
   @override
   Widget build(BuildContext context) {
     DateTime? selectedDate;
-    int selectedProperty = -1;
-    int selectedRoom = -1;
-    late List<Room> roomList = [];
+
+    late List<Room> roomList = <Room>[];
 
     getRooms(selectedProperty).then((value) => roomList = value);
 
@@ -132,7 +133,7 @@ class _ReservationFormState extends State<ReservationForm> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 TextFormField(
-                  initialValue: _id?.toString() ?? "0",
+                  initialValue: _id.toString() ?? "0",
                   decoration: const InputDecoration(labelText: 'Reservation'),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -140,7 +141,7 @@ class _ReservationFormState extends State<ReservationForm> {
                     }
                     return null;
                   },
-                  onSaved: (value) => _id = value! as int,
+                  onSaved: (value) => _id = int.parse(value!),
                 ),
                 FormField<DateTime>(
                   initialValue: DateTime.now(),
@@ -185,9 +186,14 @@ class _ReservationFormState extends State<ReservationForm> {
                       }
                       return null;
                     },
-                    onChanged: (value) => setState(() {
-                          selectedProperty = value as int;
-                        })),
+                    onChanged: (value) =>
+                    {
+                      if(value != "")
+                        setState(() {
+                          selectedProperty = int.parse(value);
+                          selectedRoom = -1;
+                        })
+                    }),
                 DropdownButtonFormField<int>(
                   items: roomList.map((room) {
                     return DropdownMenuItem<int>(
@@ -196,7 +202,7 @@ class _ReservationFormState extends State<ReservationForm> {
                     );
                   }).toList(),
                   onChanged: (value) => setState(() {
-                    selectedRoom = value as int;
+                    selectedRoom = value!;
                   }),
                   decoration: const InputDecoration(labelText: 'Room Number'),
                   validator: (value) {
@@ -221,3 +227,4 @@ class _ReservationFormState extends State<ReservationForm> {
     );
   }
 }
+

@@ -28,9 +28,9 @@ class Property {
         hostID: json['hostID'],
         name: json['name'],
         createdOn: DateFormat(dateFormat).parse(json['createdOn']),
-        createdBy: json['createdBy'],
+        createdBy: int.parse(json['createdBy']),
         modifiedOn: DateFormat(dateFormat).parse(json['modifiedOn']),
-        modifiedBy: json['modifiedBy'],
+        modifiedBy: int.parse(json['modifiedBy']),
         status: json['status']);
   }
 }

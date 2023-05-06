@@ -32,7 +32,7 @@ class UserService {
       var content = jsonDecode(res.content);
       var token = content['token'];
       var id = content['id'];
-      TokenStorage().saveToken(token);
+      await TokenStorage().saveToken(token);
 
       return User(id: id, name: name, surname: surname, email: email);
     } else {
@@ -48,7 +48,7 @@ class UserService {
       var content = jsonDecode(res.content);
       var token = content['token'];
       var id = content['id'];
-      TokenStorage().saveToken(token);
+      await TokenStorage().saveToken(token);
       var res2 = await hs.get('user/$id');
 
       if (res2.code == 200) {

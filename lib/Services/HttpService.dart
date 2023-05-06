@@ -6,7 +6,7 @@ import 'package:conciergeapp/Models/HttpResponse.dart';
 
 class HttpService {
   //final String baseUrl = 'https://192.168.1.41:44356/api/';
-  final String baseUrl = 'https://192.168.1.109:32770/api/';
+  final String baseUrl = 'https://192.168.1.109:32768/api/';
   final AuthService as = AuthService();
 
 

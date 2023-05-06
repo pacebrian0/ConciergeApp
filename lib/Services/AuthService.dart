@@ -21,12 +21,12 @@ class AuthService{
 
       http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
-      }
-      else {
-        print(response.reasonPhrase);
-      }
+      // if (response.statusCode == 200) {
+      //   print(await response.stream.bytesToString());
+      // }
+      // else {
+      //   print(response.reasonPhrase);
+      // }
       if (response.statusCode == 200) {
         return response.stream.bytesToString();
       } else {
