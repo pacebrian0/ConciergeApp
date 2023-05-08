@@ -16,7 +16,7 @@ jobs:
       uses: docker/setup-docker@v2
 
     - name: Set up Flutter
-      uses: subosito/flutter-action@v1.10.2
+      uses: subosito/flutter-action@v2.10.0
       with:
         channel: 'stable'
 
