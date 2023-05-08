@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  flutter-web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ConciergeApp
+    ports:
+      - '80:80'
