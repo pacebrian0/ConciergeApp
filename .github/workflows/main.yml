@@ -35,8 +35,9 @@ jobs:
         context: .
         push: true
         tags: concierge-web:latest
-        username: ${{ secrets.DOCKER_USERNAME }}
-        access_token: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Deploy Docker container to Ubuntu Server
       uses: appleboy/ssh-action@master
