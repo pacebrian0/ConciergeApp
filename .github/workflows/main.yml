@@ -40,7 +40,6 @@ jobs:
       with:
         context: .
         push: true
-        tags: concierge-web:latest
      
 
     - name: Deploy Docker container to Ubuntu Server
