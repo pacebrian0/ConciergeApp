@@ -37,7 +37,7 @@ jobs:
         tags: concierge-web:latest
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
     - name: Deploy Docker container to Ubuntu Server
       uses: appleboy/ssh-action@master
