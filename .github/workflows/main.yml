@@ -12,29 +12,23 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-#     - name: Set up Docker
-#       uses: docker/login-action@v2.1.0
-#       with:
-#         username: ${{ secrets.DOCKER_USERNAME }}
-#         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2.10.0
+    - name: Set up Docker
+      uses: docker/login-action@v2.1.0
       with:
-        channel: 'stable'
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-    - name: Install dependencies
-      run: flutter pub get
+#     - name: Set up Flutter
+#       uses: subosito/flutter-action@v2.10.0
+#       with:
+#         channel: 'stable'
 
-    - name: Build Flutter Web app
-      run: flutter build web --release
+#     - name: Install dependencies
+#       run: flutter pub get
 
-    - name: docker login
-      env:
-        DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_ACCESS_TOKEN}}
-      run: |
-        docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN 
+#     - name: Build Flutter Web app
+#       run: flutter build web --release
+
         
     - name: Build Docker image
       run: docker build . --file Dockerfile --tag pacebrian0/conciergeweb:$(date +%s)
