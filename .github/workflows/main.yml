@@ -30,13 +30,13 @@ jobs:
       run: flutter build web --release
 
     - name: Build Docker image
-      run: docker build -t concierge-web .
+      run: docker build -t conciergeweb .
       
     - name: Push Docker image to Docker Hub
       uses: docker/build-push-action@v4
       with:
         push: true
-        tags: pacebrian0/concierge-web:latest
+        tags: pacebrian0/conciergeweb:latest
 
     - name: Deploy Docker container to Ubuntu Server
       uses: appleboy/ssh-action@master
@@ -46,7 +46,7 @@ jobs:
         password: ${{ secrets.SERVER_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
-          docker pull concierge-web:latest
-          docker stop concierge-web || true
-          docker rm concierge-web|| true
-          docker run -d --name concierge-web -p 80:80 concierge-web:latest
+          docker pull conciergeweb:latest
+          docker stop conciergeweb || true
+          docker rm conciergeweb|| true
+          docker run -d --name conciergeweb -p 80:80 conciergeweb:latest
