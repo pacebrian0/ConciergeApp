@@ -33,7 +33,7 @@ jobs:
 
         
     - name: Build Docker image
-      run: docker build . --file Dockerfile --tag pacebrian0/conciergeweb:$(date +%s)
+      run: docker build . --file Dockerfile --tag pacebrian0/conciergeweb:latest
       
     - name: Docker Push
       run: docker push container.io/pacebrian0/conciergeweb:latest
