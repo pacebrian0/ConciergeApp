@@ -20,15 +20,22 @@ jobs:
         registry: cloud.canister.io:5000
         
         
-    - name: Build Docker image
-      run: docker build . --file Dockerfile
+#     - name: Build Docker image
+#       run: docker build . --file Dockerfile
 
-    - name: Docker Tag
-      run: docker tag latest cloud.canister.io:5000/pacebrian0/conciergeweb:latest
+#     - name: Docker Tag
+#       run: docker tag latest cloud.canister.io:5000/pacebrian0/conciergeweb:latest
           
-    - name: Docker Push
-      run: docker push cloud.canister.io:5000/pacebrian0/conciergeweb
-      
+#     - name: Docker Push
+#       run: docker push cloud.canister.io:5000/pacebrian0/conciergeweb
+
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        file: Dockerfile
+        push: true
+        tags: cloud.canister.io:5000/pacebrian0/conciergeweb:latest
+        
 #     - name: Push Docker image to Docker Hub
 #       uses: docker/build-push-action@v4
 #       with:
