@@ -57,7 +57,7 @@ jobs:
         password: ${{ secrets.SERVER_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
-          docker pull container.io/pacebrian0/conciergeweb:latest
-          docker stop  container.io/pacebrian0/conciergeweb || true
-          docker rm p container.io/pacebrian0/conciergeweb|| true
-          docker run -d --name conciergeweb -p 80:80  container.io/pacebrian0/conciergeweb:latest
+          docker pull cloud.canister.io:5000/pacebrian0/conciergeweb:latest
+          docker stop  cloud.canister.io:5000/pacebrian0/conciergeweb || true
+          docker rm p cloud.canister.io:5000/pacebrian0/conciergeweb|| true
+          docker run -d --name conciergeweb -p 80:80  cloud.canister.io:5000/pacebrian0/conciergeweb:latest
