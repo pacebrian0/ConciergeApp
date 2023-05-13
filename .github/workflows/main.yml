@@ -36,7 +36,7 @@ jobs:
       run: docker build . --file Dockerfile --tag pacebrian0/conciergeweb:latest
 
     - name: Docker Tag
-      run: docker tag pacebrian0/conciergeweb:latest canister.io/pacebrian0/conciergeweb:latest
+      run: docker tag latest canister.io/pacebrian0/conciergeweb:latest
           
     - name: Docker Push
       run: docker push cloud.canister.io:5000/pacebrian0/conciergeweb:latest
