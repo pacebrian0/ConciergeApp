@@ -36,7 +36,7 @@ jobs:
       run: docker build . --file Dockerfile --tag pacebrian0/conciergeweb:$(date +%s)
       
     - name: Docker Push
-      run: docker push container.io/pacebrian0/conciergeweb
+      run: docker push container.io/pacebrian0/conciergeweb:$(date +%s)
       
 #     - name: Push Docker image to Docker Hub
 #       uses: docker/build-push-action@v4
