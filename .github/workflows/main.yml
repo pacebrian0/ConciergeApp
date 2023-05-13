@@ -59,8 +59,9 @@ jobs:
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
           docker login --username=${{ secrets.CONTAINERIO_USER }} --password=${{ secrets.CONTAINERIO_PASSWORD }} cloud.canister.io:5000
-          docker image list
+          
           docker pull cloud.canister.io:5000/pacebrian0/conciergeweb:latest
+          docker image list
           docker stop  pacebrian0/conciergeweb || true
           docker rm p pacebrian0/conciergeweb|| true
           docker run -d --name conciergeweb -p 80:80  pacebrian0/conciergeweb:latest
