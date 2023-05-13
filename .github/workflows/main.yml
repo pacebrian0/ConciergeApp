@@ -41,7 +41,7 @@ jobs:
       with:
         file: Dockerfile
         push: true
-        tags: cloud.canister.io:5000/pacebrian0/conciergeweb:latest
+        tags: pacebrian0/conciergeweb:latest
         
 #     - name: Push Docker image to Docker Hub
 #       uses: docker/build-push-action@v4
