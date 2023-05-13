@@ -33,10 +33,12 @@ jobs:
 
         
     - name: Build Docker image
-      run: docker build -t . --file Dockerfile --tag pacebrian0/conciergeweb:latest
-      
+      run: docker build . --file Dockerfile --tag pacebrian0/conciergeweb:latest
+
     - name: Docker Push
-      run: docker push container.io/pacebrian0/conciergeweb:latest
+      run: |
+          docker tag pacebrian0/conciergeweb:latest canister.io/pacebrian0/conciergeweb:latest
+          docker push canister.io/pacebrian0/conciergeweb:latest
       
 #     - name: Push Docker image to Docker Hub
 #       uses: docker/build-push-action@v4
