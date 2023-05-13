@@ -15,8 +15,8 @@ jobs:
     - name: Set up Docker
       uses: docker/login-action@v2.1.0
       with:
-        username: ${{ secrets.CANISTERIO_USER }}
-        password: ${{ secrets.CANISTERIO_PASSWORD }}
+        username: ${{ secrets.CONTAINERIO_USER }}
+        password: ${{ secrets.CONTAINERIO_PASSWORD }}
         registry: cloud.canister.io:5000
         
 
