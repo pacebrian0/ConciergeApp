@@ -36,13 +36,24 @@ jobs:
 #     - name: Docker Push
 #       run: docker push cloud.canister.io:5000/pacebrian0/conciergeweb
 
+#     - name: Build and push
+#       uses: docker/build-push-action@v3
+#       with:
+#         file: Dockerfile
+#         push: true
+#         provenance: false
+#         tags: cloud.canister.io:5000/pacebrian0/conciergeweb:latest
+
     - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-        file: Dockerfile
-        push: true
-        provenance: false
-        tags: cloud.canister.io:5000/pacebrian0/conciergeweb:latest
+      uses: opspresso/action-docker@master
+      # with:
+      env:
+        USERNAME: ${{ secrets.CONTAINERIO_USER }}
+        PASSWORD: ${{ secrets.CONTAINERIO_PASSWORD }}
+        REGISTRY: cloud.canister.io:5000
+        IMAGE_NAME: ${{ secrets.CANISTERIO_USER }}/conciergeweb
+        DOCKERFILE: ./Dockerfile
+        LATEST: "true" 
         
 #     - name: Push Docker image to Docker Hub
 #       uses: docker/build-push-action@v4
