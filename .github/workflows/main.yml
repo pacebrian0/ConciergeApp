@@ -51,7 +51,7 @@ jobs:
         USERNAME: ${{ secrets.CONTAINERIO_USER }}
         PASSWORD: ${{ secrets.CONTAINERIO_PASSWORD }}
         REGISTRY: cloud.canister.io:5000
-        IMAGE_NAME: ${{ secrets.CANISTERIO_USER }}/conciergeweb
+        IMAGE_NAME: ${{ secrets.CONTAINERIO_USER }}/conciergeweb
         DOCKERFILE: Dockerfile
         LATEST: "true" 
         
