@@ -52,7 +52,7 @@ jobs:
         PASSWORD: ${{ secrets.CONTAINERIO_PASSWORD }}
         REGISTRY: cloud.canister.io:5000
         IMAGE_NAME: ${{ secrets.CANISTERIO_USER }}/conciergeweb
-        DOCKERFILE: ./Dockerfile
+        DOCKERFILE: Dockerfile
         LATEST: "true" 
         
 #     - name: Push Docker image to Docker Hub
