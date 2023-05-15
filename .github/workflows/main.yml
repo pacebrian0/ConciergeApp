@@ -26,23 +26,6 @@ jobs:
         password: ${{ secrets.CONTAINERIO_PASSWORD }}
         registry: cloud.canister.io:5000
         
-        
-#     - name: Build Docker image
-#       run: docker build . --file Dockerfile
-
-#     - name: Docker Tag
-#       run: docker tag latest cloud.canister.io:5000/pacebrian0/conciergeweb:latest
-          
-#     - name: Docker Push
-#       run: docker push cloud.canister.io:5000/pacebrian0/conciergeweb
-
-#     - name: Build and push
-#       uses: docker/build-push-action@v3
-#       with:
-#         file: Dockerfile
-#         push: true
-#         provenance: false
-#         tags: cloud.canister.io:5000/pacebrian0/conciergeweb:latest
 
     - name: Build and push
       uses: opspresso/action-docker@master
@@ -55,24 +38,24 @@ jobs:
         DOCKERFILE: Dockerfile
         LATEST: "true" 
         
-#     - name: Push Docker image to Docker Hub
-#       uses: docker/build-push-action@v4
-#       with:
-#         push: true
-#         tags: pacebrian0/conciergeweb:latest
-
-    - name: Deploy Docker container to Ubuntu Server
-      uses: appleboy/ssh-action@master
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USERNAME }}
-        password: ${{ secrets.SERVER_KEY }}
-        port: ${{ secrets.SERVER_SSH_PORT }}
-        script: |
-          docker login --username=${{ secrets.CONTAINERIO_USER }} --password=${{ secrets.CONTAINERIO_PASSWORD }} cloud.canister.io:5000
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+
+#     - name: Deploy Docker container to Ubuntu Server
+#       uses: appleboy/ssh-action@master
+#       with:
+#         host: ${{ secrets.SERVER_HOST }}
+#         username: ${{ secrets.SERVER_USERNAME }}
+#         password: ${{ secrets.SERVER_KEY }}
+#         port: ${{ secrets.SERVER_SSH_PORT }}
+#         script: |
+#           docker login --username=${{ secrets.CONTAINERIO_USER }} --password=${{ secrets.CONTAINERIO_PASSWORD }} cloud.canister.io:5000
           
-          docker pull cloud.canister.io:5000/pacebrian0/conciergeweb:latest
-          docker image list
-          docker stop  pacebrian0/conciergeweb || true
-          docker rm p pacebrian0/conciergeweb|| true
-          docker run -d --name conciergeweb -p 80:80  pacebrian0/conciergeweb:latest
+#           docker pull cloud.canister.io:5000/pacebrian0/conciergeweb:latest
+#           docker image list
+#           docker stop  pacebrian0/conciergeweb || true
+#           docker rm p pacebrian0/conciergeweb|| true
+#           docker run -d --name conciergeweb -p 80:80  pacebrian0/conciergeweb:latest
